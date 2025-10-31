@@ -4,16 +4,13 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:mobileSecretCodes/data/ads.dart';
 import 'package:mobileSecretCodes/data/config.dart';
 import 'package:mobileSecretCodes/data/data.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:mobileSecretCodes/screen/codelist.dart';
-import 'package:mobileSecretCodes/screen/new_release.dart';
 import 'package:mobileSecretCodes/data/parser_data.dart';
 import 'package:mobileSecretCodes/screen/code_arena.dart';
-import 'package:mobileSecretCodes/screen/tricks.dart';
 import 'dart:math' as math;
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -50,24 +47,38 @@ class _HomePageState extends State<HomePage> {
                     child: Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.rotationX(math.pi),
-                      child: Column(
-                        children: [
-                          Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Center(
                               child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Image.asset('assets/images/icon.png',
-                                  height: 200),
-                              Text("All Mobile Secret Codes",
-                                  style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20)),
+                              Flexible(
+                                child: Image.asset('assets/images/icon.png',
+                                    height: 250, fit: BoxFit.contain),
+                              ),
+                              //SizedBox(height: 10),
+                              bannerContainer7,
+                              SizedBox(height: 8),
+                              Flexible(
+                                child: Text("All Mobile Secret Codes",
+                                    style: TextStyle(
+                                        color: white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
                             ],
                           )),
-                          Spacer(),
-                          bannerContainer7,
-                        ],
-                      ),
+                        ),
+                        //Spacer(),
+                       
+                      ],
+                    ),
                     ),
                   ),
                 ),
@@ -78,10 +89,14 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.symmetric(vertical: 8.0),
               child: bannerContainer,
             ),
-            Container(
-              margin:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height * .5),
+            Positioned(
+              top: MediaQuery.of(context).size.height * .5,
+              left: 0,
+              right: 0,
+              bottom: 100,
               child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: menu.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 0,
@@ -129,6 +144,7 @@ class _HomePageState extends State<HomePage> {
                         }
                       },
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
                               width: 80,
@@ -144,7 +160,15 @@ class _HomePageState extends State<HomePage> {
                               ], shape: BoxShape.circle, color: primary),
                               child: Icon(menu[index]['icon'],
                                   color: white, size: 30)),
-                          Text(menu[index]['title']),
+                          Flexible(
+                            child: Text(
+                              menu[index]['title'],
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
                         ],
                       ),
                     );
@@ -156,34 +180,47 @@ class _HomePageState extends State<HomePage> {
               left: 0,
               right: 0,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   bannerContainer6,
-                  Text(
-                    "All Mobile Secret Codes",
-                    style: TextStyle(
-                      color: Colors.amber,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
+                  Flexible(
+                    child: Text(
+                      "All Mobile Secret Codes",
+                      style: TextStyle(
+                        color: Colors.amber,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                  Text(
-                    "App version: 5:23.03.21",
-                    style: TextStyle(
-                      color: primary,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
+                  Flexible(
+                    child: Text(
+                      "App version: 5:23.03.21",
+                      style: TextStyle(
+                        color: primary,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                  Text(
-                    "com.stsl.code!nk",
-                    style: TextStyle(
-                      color: primary,
-                      fontSize: 9,
-                      fontWeight: FontWeight.w700,
+                  Flexible(
+                    child: Text(
+                      "com.stsl.code!nk",
+                      style: TextStyle(
+                        color: primary,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -211,10 +248,10 @@ class _HomePageState extends State<HomePage> {
 
 /* class NavigationMenu extends StatelessWidget {
   const NavigationMenu({
-    Key? key,
+    super.key,
     required this.scaffoldkey,
     required this.inAppReview,
-  }) : super(key: key);
+  });
 
   final GlobalKey<ScaffoldState> scaffoldkey;
   final InAppReview inAppReview;
@@ -435,8 +472,8 @@ class PhoneBrandsView extends StatelessWidget {
   const PhoneBrandsView({
     required this.index,
     required this.gridViewCrossAxisCount,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int index;
   final int gridViewCrossAxisCount;
@@ -444,12 +481,13 @@ class PhoneBrandsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        adIntRewardPermission(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    CodeArena(platform: list[index]['name']!)));
+        adIntRewardThen(context, () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      CodeArena(platform: list[index]['name']!)));
+        });
       },
       child: AnimatedContainer(
         padding: EdgeInsets.all(16),
@@ -472,19 +510,27 @@ class PhoneBrandsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              list[index]['img']!,
-              height: 50,
-              width: 50,
-              //colorBlendMode: BlendMode.colorDodge,
+            Flexible(
+              child: Image.asset(
+                list[index]['img']!,
+                height: 50,
+                width: 50,
+                fit: BoxFit.contain,
+              ),
             ),
-            SizedBox(width: 16),
-            Text(
-              list[index]['name']!,
-              style: const TextStyle(
-                color: Colors.white54,
-                fontWeight: FontWeight.w800,
+            SizedBox(height: 8),
+            Flexible(
+              child: Text(
+                list[index]['name']!,
+                style: const TextStyle(
+                  color: Colors.white54,
+                  fontWeight: FontWeight.w800,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

@@ -7,13 +7,22 @@ import 'package:mobileSecretCodes/data/data.dart';
 import 'package:mobileSecretCodes/screen/home_page.dart';
 
 class CodeList extends StatefulWidget {
-  const CodeList({Key? key}) : super(key: key);
+  const CodeList({super.key});
 
   @override
   State<CodeList> createState() => _MyWidgetState();
 }
 
 class _MyWidgetState extends State<CodeList> {
+  @override
+  void initState() {
+    super.initState();
+    // Load banner ads for this screen
+    myBanner7.load();
+    myBanner8.load();
+    myBanner9.load();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,21 +48,36 @@ class _MyWidgetState extends State<CodeList> {
                     alignment: Alignment.center,
                     transform: Matrix4.rotationX(math.pi),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Spacer(),
-                        Center(
-                            child: Column(
-                          children: [
-                            Image.asset('assets/images/icon.png', height:200),
-                            Text("Most Popular Phone Brands",
-                                style: TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20)),
-                          ],
-                        )),
+                        Flexible(
+                          child: Center(
+                              child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: Image.asset('assets/images/icon.png',
+                                    height: 250, fit: BoxFit.contain),
+                              ),
+                              SizedBox(height: 8),
+                              Flexible(
+                                child: Text("Most Popular Phone Brands",
+                                    style: TextStyle(
+                                        color: white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ],
+                          )),
+                        ),
                         Spacer(),
                         if (isloaded.value) bannerContainer7,
+                        SizedBox(height: 8),
+                        if (isloaded.value) bannerContainer8,
                         Spacer(),
                       ],
                     ),
@@ -66,7 +90,7 @@ class _MyWidgetState extends State<CodeList> {
             top: 300,
             left: 0,
             right: 0,
-            bottom: 0,
+            bottom: 80,
             child: GridView.builder(
                 physics: BouncingScrollPhysics(),
                 itemCount: list.length,
@@ -79,6 +103,16 @@ class _MyWidgetState extends State<CodeList> {
                   return PhoneBrandsView(
                       index: index, gridViewCrossAxisCount: 3);
                 }),
+          ),
+          // Bottom banner ad
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              alignment: Alignment.center,
+              child: isloaded.value ? bannerContainer9 : const SizedBox(),
+            ),
           ),
         ],
       ),

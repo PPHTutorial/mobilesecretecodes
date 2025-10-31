@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:mobileSecretCodes/data/ads.dart';
 import 'package:mobileSecretCodes/data/parser_data.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewReleases extends StatefulWidget {
-  const NewReleases({Key? key}) : super(key: key);
+  const NewReleases({super.key});
 
   @override
   State<NewReleases> createState() => _NewReleasesState();

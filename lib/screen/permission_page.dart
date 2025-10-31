@@ -5,7 +5,7 @@ import 'package:mobileSecretCodes/screen/home_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionPage extends StatefulWidget {
-  const PermissionPage({Key? key}) : super(key: key);
+  const PermissionPage({super.key});
 
   @override
   State<PermissionPage> createState() => _PermissionPageState();
@@ -32,7 +32,7 @@ class _PermissionPageState extends State<PermissionPage> {
       body: Center(
         child: Text(
           "Accept permission",
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 20),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
         ),
       ),
     );

@@ -7,12 +7,11 @@ import 'package:mobileSecretCodes/data/config.dart';
 import 'package:mobileSecretCodes/data/data.dart';
 import 'package:mobileSecretCodes/data/dialer.dart';
 import 'package:mobileSecretCodes/data/parser_data.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class CodeArena extends StatefulWidget {
-  const CodeArena({required this.platform, Key? key}) : super(key: key);
+  const CodeArena({required this.platform, super.key});
   final String platform;
 
   @override
@@ -165,7 +164,7 @@ class _CodeArenaState extends State<CodeArena> {
 }
 
 class CodePlatform extends StatefulWidget {
-  const CodePlatform({required this.platform, Key? key}) : super(key: key);
+  const CodePlatform({required this.platform, super.key});
   final String platform;
   @override
   State<CodePlatform> createState() => _CodePlatformState();
@@ -296,9 +295,10 @@ class CodePlatform extends StatefulWidget {
                                           codes[index]['code'].toString());
                                       var url = 'tel:' + code;
                                       try {
-                                        if (await canLaunchUrlString(url)) {
+                                        final uri = Uri.parse(url);
+                                        if (await canLaunchUrl(uri)) {
                                           //showToast(sSomethingWrong);
-                                          launchUrlString(url);
+                                          await launchUrl(uri);
                                           message(context,
                                               "Code ${codes[index]['code']!} is being dialed");
                                         }

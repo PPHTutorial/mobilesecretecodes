@@ -3,11 +3,11 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:mobileSecretCodes/data/ads.dart';
 import 'package:mobileSecretCodes/data/data.dart';
 import 'package:mobileSecretCodes/data/parser_data.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class Tricks extends StatefulWidget {
-  const Tricks({Key? key}) : super(key: key);
+  const Tricks({super.key});
 
   @override
   State<Tricks> createState() => _TricksState();

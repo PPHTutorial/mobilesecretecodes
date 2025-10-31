@@ -389,9 +389,9 @@ void adRewardPermission(context) {
           children: [
             AlertDialog(
               title: const Text('Ad Consent'),
-              content: Column(
+              content: const Column(
                 children: [
-                  Text(
+                 Text(
                       "The page you're about to wiew may be led by an advetistment, do you wish to continue to the requested page after watching the short video?"),
                   //TextButton(onPressed: () {}, child: Text('Why watch ads?')),
                 ],
@@ -404,6 +404,7 @@ void adRewardPermission(context) {
                     child: Text("Cancel")),
                 TextButton(
                     onPressed: () {
+                      Navigator.pop(context);
                       showRewardedAd();
                     },
                     child: Text("Watch Ads")),
@@ -438,6 +439,7 @@ void adIntRewardPermission(context) {
                     child: Text("Cancel")),
                 TextButton(
                     onPressed: () {
+                      Navigator.pop(context);
                       showRewardedInterstitialAd();
                     },
                     child: Text("Watch Ads")),
@@ -446,6 +448,77 @@ void adIntRewardPermission(context) {
           ],
         );
       });
+}
+
+
+void showRewardedInterstitialAdWithCallback(VoidCallback onDone) {
+  if (rewardedInterstitialAd == null) {
+    // If not ready, recreate and proceed without blocking navigation
+    createRewardedInterstitialAd();
+    onDone();
+    return;
+  }
+
+  rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+    onAdShowedFullScreenContent: (RewardedInterstitialAd ad) =>
+        print('$ad onAdShowedFullScreenContent.'),
+    onAdDismissedFullScreenContent: (RewardedInterstitialAd ad) {
+      print('$ad onAdDismissedFullScreenContent.');
+      ad.dispose();
+      createRewardedInterstitialAd();
+      onDone();
+    },
+    onAdFailedToShowFullScreenContent:
+        (RewardedInterstitialAd ad, AdError error) {
+      print('$ad onAdFailedToShowFullScreenContent: $error');
+      ad.dispose();
+      createRewardedInterstitialAd();
+      onDone();
+    },
+  );
+
+  rewardedInterstitialAd!.setImmersiveMode(true);
+  rewardedInterstitialAd!.show(
+    onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+    },
+  );
+  rewardedInterstitialAd = null;
+}
+
+void adIntRewardThen(BuildContext context, VoidCallback onDone) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AlertDialog(
+            title: const Text('Ad Consent'),
+            content: Column(
+              children: const [
+                Text(
+                    "The page you're about to wiew may be led by an advetistment, do you wish to continue to the requested page after watching the short video?"),
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Cancel")),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    showRewardedInterstitialAdWithCallback(onDone);
+                  },
+                  child: const Text("Watch Ads")),
+            ],
+          ),
+        ],
+      );
+    },
+  );
 }
 
 
